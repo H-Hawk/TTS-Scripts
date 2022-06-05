@@ -1,11 +1,11 @@
 --[[  Constants ]]
 gridFactor = { 1,  1.15, 1.15 }
 imgUrls = {
-  ['line'] = 'http://cloud-3.steamusercontent.com/ugc/1830163607510884164/C8229AB3AC5B6ECC9AD82707DD6319E0AE7DBE8D/',
-  ['cone'] = 'http://cloud-3.steamusercontent.com/ugc/1830163607510884072/DC2C8FA19225A57A3FF85087EF17651EF0FE17DA/',
-  ['cube'] = 'http://cloud-3.steamusercontent.com/ugc/1830163607510884252/B415A23C08A78D7ABD2D129275F652C5CF8BAF10/',
-  ['sphere'] = 'http://cloud-3.steamusercontent.com/ugc/1830163607510883986/7607CB1B7467813343CEF27D34E4685E1935EF03/',
-  ['cylinder'] = 'http://cloud-3.steamusercontent.com/ugc/1830163607510883986/7607CB1B7467813343CEF27D34E4685E1935EF03/',
+  ['line'] = 'http://cloud-3.steamusercontent.com/ugc/1830163886710059483/90007030D4B46B61E5361EE4DFC129264B1034E5/',
+  ['cone'] = 'http://cloud-3.steamusercontent.com/ugc/1830163886710059389/253EDF26076AF98A188881BF1CC59F293FB113BA/',
+  ['cube'] = 'http://cloud-3.steamusercontent.com/ugc/1830163886710059592/7E6B6A53983B6A8B8C8C56E2571C0345B8073A6D/',
+  ['sphere'] = 'http://cloud-3.steamusercontent.com/ugc/1830163886710059312/2376A8F939EC159160A068D4258AD6D630778213/',
+  ['cylinder'] = 'http://cloud-3.steamusercontent.com/ugc/1830163886710059312/2376A8F939EC159160A068D4258AD6D630778213/',
 }
 subMenuTable = {
   [3] = 'all',
