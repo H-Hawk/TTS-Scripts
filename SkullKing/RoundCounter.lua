@@ -1,12 +1,11 @@
 --[[ Perma Refresh ]]
 function onLoad()
-  Global.registerRoundCounter(self)
   startLuaCoroutine(self, "check_counter")
 end
 
 function check_counter()
     while true do
-        self.setValue(Global.getRound()))
+        self.setValue(Global.getRound())
         wait(0.75)
     end
     return 1

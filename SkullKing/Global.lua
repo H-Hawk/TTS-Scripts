@@ -1,3 +1,10 @@
+--[[ Helper ]]
+function len(t)
+	local out = 0
+	for _, _ in pairs(t) do out = out + 1 end
+	return out
+end
+
 --[[ Const ]]
 playSurface = '9a3403'
 deckPos = {-45.00, 2.02, -3.00}
@@ -63,12 +70,14 @@ end
 function seatPlayersRandomly()
 	local players = Player.getPlayers()
 
-	if #players > 6 then 
+	local len = len(players)
+
+	if len > 6 then 
 		print('Error: Too many Player')
 		return
 	end
 
-	numOfPlayer = #players
+	numOfPlayer = len
 
 	shuffle(players)
 
@@ -135,9 +144,9 @@ function flipBids()
 	end
 
 	local bids = getPlayedBids()
-
-	if not numOfPlayer == #bids then
-		print('Error: Mismatch between Number of found Bids'+#bids+' and Seated Players('+numOfPlayer+')')
+	local lenBids = len(bids)
+	if not numOfPlayer == lenBids then
+		print('Error: Mismatch between Number of found Bids'+lenBids+' and Seated Players('+numOfPlayer+')')
 		return
 	end
 
@@ -157,8 +166,8 @@ end
 
 function resetDeck()
 	local deck = group(getObjectsWithTag('Card'))
-
-	if not #deck == 1 then 
+	local lenDeck = len(deck)
+	if not lenDeck == 1 then 
 		print('Error: Unable to reset Deck. Trying Again.')
 		return resetDeck()
 	else 
@@ -185,7 +194,7 @@ end
 
 --[[ Loading Functions ]]
 function freezeObj(toFreeze)
-	for i = 1, #toFreeze, 1 do
+	for i = 1, len(toFreeze), 1 do
 		obj = getObjectFromGUID(toFreeze[i])
 		if obj ~= nil then
 			obj.interactable = false

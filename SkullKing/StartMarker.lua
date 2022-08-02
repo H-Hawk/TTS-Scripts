@@ -1,3 +1,10 @@
+--[[ Helper ]]
+function len(t)
+	local out = 0
+	for _, _ in pairs(t) do out = out + 1 end
+	return out
+end
+
 playerPositions = {}
 
 currentPosition = 0
@@ -14,15 +21,21 @@ order = {
 
 --[[ Setup Setter]]
 function addPlayerPosition()
-	if #playerPositions >= 6 then
+	print('Adding Position to Startmarker') 
+
+	local len = len(playerPositions)
+
+	if len >= 6 then
 		print('Error all player positions already set')
 		return
 	end
 
-	playerPositions[order[6][#playerPositions+1]] = self.getPosition()
+	playerPositions[order[6][len+1]] = self.getPosition()
+	print('Ending Succesful')
 end
 
 function resetPlayerPositions()
+	print('Reseting the player positions')
 	playerPositions = {}
 end
 
@@ -59,14 +72,13 @@ end
 
 function onLoad(stateString)
 	if stateString:len() == 0 then 
-		print('Point Counter '..self.guid..' not setup.')
+		print('Start Marker '..self.guid..' not setup.')
 	else
+  		local state = JSON.decode(stateString)
+  		playerPositions = state['playerPositions']
 
-  	local state = JSON.decode(stateString)
-
-  	playerPositions = state['playerPositions']
-
-	Global.registerStartMarker(self)
+		Global.registerStartMarker(self)
+	end
 end
 
 
