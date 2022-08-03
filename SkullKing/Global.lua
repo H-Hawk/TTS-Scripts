@@ -48,7 +48,7 @@ end
 --[[ Runtime Vars ]]
 activePlayer = {}
 numOfPlayer = 0
-round = 1
+round = 0
 playedBids = {}
 
 
