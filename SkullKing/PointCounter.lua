@@ -22,7 +22,7 @@ end
 --[[ Data Persistence ]]
 function bundleVars()
 	local vars = {
-		['owner'] = owner,
+		owner = owner
 	}
 
 	return vars
@@ -36,12 +36,11 @@ function onLoad(stateString)
 	if stateString:len() == 0 then 
 		print('Point Counter '..self.guid..' not setup.')
 	else
+		local state = JSON.decode(stateString)
+		owner = state.owner
 
-  	local state = JSON.decode(stateString)
-
-  	owner = state['owner']
-
-	Global.call('registerPointCounter', {color=owner, objRef=self})
+		Global.call('registerPointCounter', {color=owner, objRef=self})
+	end
 end
 
 
