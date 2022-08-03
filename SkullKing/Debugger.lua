@@ -87,9 +87,7 @@ function upgradeCallback(req)
 	if req.is_error then
         log(req.error)
     else
-        local state = self.script_state
         self.setLuaScript(req.text)
-        onLoad(state)
     end
 end
 
