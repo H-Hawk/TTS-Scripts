@@ -45,9 +45,13 @@ subMenu['setup'][3] = function(player) callFuncForAllSelected(player, 'setValue'
 subMenu['setup'][4] = function(player) callFuncForAllSelected(player, 'setHome') end
 subMenu['setup'][5] = function(player) callFuncForHovered(player, 'addPlayerPosition') end
 subMenu['setup'][6] = function(player) callFuncForHovered(player, 'resetPlayerPositions') end
-subMenu['setup'][7] = function(player) initObj(player, urlBid) end
-subMenu['setup'][8] = function(player) initObj(player, urlPoint) end
+subMenu['setup'][7] = function(player) currentMenu = 'init' end
 subMenu['setup'][9] = function(player) currentMenu = 'main' end
+
+subMenu['init'] = {}
+subMenu['init'][1] = function(player) initObj(player, urlBid) end
+subMenu['init'][2] = function(player) initObj(player, urlPoint) end
+subMenu['init'][9] = function(player) currentMenu = 'setup' end
 
 --[[ Setting Owner ]]
 subMenu['owner'] = {}
@@ -70,7 +74,7 @@ currentMenu = 'main'
 
 function onScriptingButtonDown(index, player)
 	if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
-	print('Current Menu: '..currentMenu)
+	print('Previous Menu: '..currentMenu)
 	subMenu[currentMenu][index](player)
 	print('Current Menu: '..currentMenu)
 end

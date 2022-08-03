@@ -1,3 +1,23 @@
+--[[ Helpers ]]
+function round(toRound, decParam)
+	local dec = decParam or 0
+
+	local shiftingPow = math.pow(10, dec)
+
+	return math.floor( (toRound*shiftingPow) + 0.5 ) / shiftingPow
+end
+
+function roundVec(toRound, dec)
+	local out = {}
+	
+	for i, v in pairs(toRound) do
+		out[i] = round(v, dec)
+	end
+
+	return out
+end
+
+--[[ Setup Const ]]
 owner = 'Grey'
 value = -1
 
@@ -14,8 +34,8 @@ function setValue(number)
 end
 
 function setHome()
-	home.position = self.getPosition()
-	home.rotation = self.getRotation()
+	home.position = roundVec(self.getPosition(), 2)
+	home.rotation = roundVec(self.getRotation())
 end
 
 

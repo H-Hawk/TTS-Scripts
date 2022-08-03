@@ -5,6 +5,23 @@ function len(t)
 	return out
 end
 
+function round(toRound, decParam)
+	local dec = decParam or 0
+
+	local shiftingPow = math.pow(10, dec)
+
+	return math.floor( (toRound*shiftingPow) + 0.5 ) / shiftingPow
+end
+
+function roundVec(toRound, dec)
+	local out = {}
+	
+	for i, v in pairs(toRound) do
+		out[i] = round(v, dec)
+	end
+
+	return out
+end
 
 --[[ Const ]]
 order = { 
@@ -21,6 +38,9 @@ order = {
 playerPositions = {}
 
 
+--[[ Vars ]]
+currentPosition = 1
+
 --[[ Setup Setter]]
 function addPlayerPosition()
 	print('Adding Position to Startmarker') 
@@ -32,7 +52,7 @@ function addPlayerPosition()
 		return
 	end
 
-	playerPositions[order[6][len+1]] = self.getPosition()
+	playerPositions[order[6][len+1]] = roundVec(self.getPosition(), 2)
 	print('Ending Succesful')
 end
 
@@ -44,7 +64,7 @@ end
 
 --[[ Used in Play ]]
 function updatePos(numOfPlayer)
-	self.setPosition(playerPositions[numOfPlayer][currentPosition])
+	self.setPosition(playerPositions[order[numOfPlayer][currentPosition]])
 end
 
 function goToPlayer(param)
