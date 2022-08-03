@@ -4,30 +4,30 @@ urlPoint = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/
 objToInit = {}
 
 function writeObjs(req)
-	if req.is_error then
+    if req.is_error then
         log(req.error)
     else
-		for _, v in pairs(objToInit) do
-			v.script_code = req.text
-		end
-	end
+        for _, v in pairs(objToInit) do
+            v.script_code = req.text
+        end
+    end
 end
 
 function initObj(player, url)
-	objToInit = Player[player].getSelectedObjects()
-	WebRequest.get(url, writeObjs)
+    objToInit = Player[player].getSelectedObjects()
+    WebRequest.get(url, writeObjs)
 end
 
 function callFuncForAllSelected(player, func, param)
-	for _, v in pairs(Player[player].getSelectedObjects()) do
-		v.call(func, param)
-	end
+    for _, v in pairs(Player[player].getSelectedObjects()) do
+        v.call(func, param)
+    end
 end
 
 function callFuncForHovered(player, func, param)
-	local obj = Player[player].getHoverObject()
-	print(obj.guid)
-	obj.call(func, param)
+    local obj = Player[player].getHoverObject()
+    print(obj.guid)
+    obj.call(func, param)
 end
 
 
@@ -66,7 +66,7 @@ subMenu['owner'][6] = function(player) callFuncForAllSelected(player, 'setOwner'
 --[[ Setting Values ]]
 subMenu['value'] = {}
 for i = 1, 10, 1 do
-	subMenu['value'][i] = function(player) callFuncForAllSelected(player, 'setValue', i) currentMenu = 'setup' end
+    subMenu['value'][i] = function(player) callFuncForAllSelected(player, 'setValue', i) currentMenu = 'setup' end
 end
 
 
@@ -74,17 +74,17 @@ end
 currentMenu = 'main'
 
 function onScriptingButtonDown(index, player)
-	if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
-	print('Previous Menu: '..currentMenu)
-	subMenu[currentMenu][index](player)
-	print('Current Menu: '..currentMenu)
+    if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
+    print('Previous Menu: '..currentMenu)
+    subMenu[currentMenu][index](player)
+    print('Current Menu: '..currentMenu)
 end
 
 --[[ Upgrade ]]
 url = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Debugger.lua'
 
 function upgradeCallback(req)
-	if req.is_error then
+    if req.is_error then
         log(req.error)
     else
         self.setLuaScript(req.text)

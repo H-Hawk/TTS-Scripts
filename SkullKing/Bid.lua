@@ -1,20 +1,20 @@
 --[[ Helpers ]]
 function round(toRound, decParam)
-	local dec = decParam or 0
+    local dec = decParam or 0
 
-	local shiftingPow = math.pow(10, dec)
+    local shiftingPow = math.pow(10, dec)
 
-	return math.floor( (toRound*shiftingPow) + 0.5 ) / shiftingPow
+    return math.floor( (toRound*shiftingPow) + 0.5 ) / shiftingPow
 end
 
 function roundVec(toRound, dec)
-	local out = {}
-	
-	for i, v in pairs(toRound) do
-		out[i] = round(v, dec)
-	end
+    local out = {}
+    
+    for i, v in pairs(toRound) do
+        out[i] = round(v, dec)
+    end
 
-	return out
+    return out
 end
 
 --[[ Setup Const ]]
@@ -26,59 +26,59 @@ home = {}
 
 --[[ Setup Setters]]
 function setOwner(color)
-	owner = color
+    owner = color
 end
 
 function setValue(number)
-	value = number
+    value = number
 end
 
 function setHome()
-	home.position = roundVec(self.getPosition(), 2)
-	home.rotation = roundVec(self.getRotation())
+    home.position = roundVec(self.getPosition(), 2)
+    home.rotation = roundVec(self.getRotation())
 end
 
 
 --[[ Used in Play ]]
 function returnHome()
-	self.setPosition(home.position)
-	self.setRotation(home.rotation)
+    self.setPosition(home.position)
+    self.setRotation(home.rotation)
 end 
 
 
 --[[ Debugging ]]
 function dumpVars()
-	print(JSON.encode(bundleVars()))
+    print(JSON.encode(bundleVars()))
 end
 
 
 --[[ Data Persistence ]]
 function bundleVars()
-	local vars = {
-		owner = owner,
-		value = value,
-		home = home
-	}
+    local vars = {
+        owner = owner,
+        value = value,
+        home = home
+    }
 
-	return vars
+    return vars
 end
 
 function onSave()
-	return JSON.encode(bundleVars())
+    return JSON.encode(bundleVars())
 end
 
 function onLoad(stateString)
-	if stateString:len() == 0 then 
-		print('Bidtoken '..self.guid..' not setup.')
-	else
-		local state = JSON.decode(stateString)
-	
-		owner = state.owner
-		value = state.value 
-		home =  state.home
-	
-		Global.call('registerBid', {color=owner, objRef=self})
-	end
+    if stateString:len() == 0 then 
+        print('Bidtoken '..self.guid..' not setup.')
+    else
+        local state = JSON.decode(stateString)
+    
+        owner = state.owner
+        value = state.value 
+        home =  state.home
+    
+        Global.call('registerBid', {color=owner, objRef=self})
+    end
 end
 
 
@@ -86,7 +86,7 @@ end
 url = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Bid.lua'
 
 function upgradeCallback(req)
-	if req.is_error then
+    if req.is_error then
         log(req.error)
     else
         local state = self.script_state
