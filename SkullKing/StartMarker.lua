@@ -25,8 +25,8 @@ end
 
 --[[ Const ]]
 order = { 
-    {}, 
-    {}, 
+    {'Brown'}, 
+    {'Brown', 'Red'}, 
     {'Brown', 'Red', 'Green'}, 
     {'Brown', 'Red', 'Green', 'Teal'}, 
     {'White', 'Brown', 'Red', 'Green', 'Teal'},

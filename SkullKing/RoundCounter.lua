@@ -1,19 +1,10 @@
 --[[ Perma Refresh ]]
 function onLoad()
-    startLuaCoroutine(self, "check_counter")
+    Wait.time(refresh, 1, -1)
 end
 
-function check_counter()
-    while true do
-        self.setValue(Global.getRound())
-        wait(0.75)
-    end
-    return 1
-end
-
-function wait(time)
-    local start = os.time()
-    repeat coroutine.yield(0) until os.time() > start + time
+function refresh()
+    self.setValue(Global.call('getRound'))
 end
 
 
