@@ -5,10 +5,8 @@ function len(t)
 	return out
 end
 
-playerPositions = {}
 
-currentPosition = 0
-
+--[[ Const ]]
 order = { 
 	{}, 
 	{}, 
@@ -19,6 +17,10 @@ order = {
 }
 
 
+--[[ Setup Const ]]
+playerPositions = {}
+
+
 --[[ Setup Setter]]
 function addPlayerPosition()
 	print('Adding Position to Startmarker') 
@@ -26,7 +28,7 @@ function addPlayerPosition()
 	local len = len(playerPositions)
 
 	if len >= 6 then
-		print('Error all player positions already set')
+		print('Error: all player positions already set')
 		return
 	end
 
@@ -45,9 +47,9 @@ function updatePos(numOfPlayer)
 	self.setPosition(playerPositions[numOfPlayer][currentPosition])
 end
 
-function goToPlayer(round, numOfPlayer)
-	currentPosition = ( (round - 1) % numOfPlayer ) + 1
-	updatePos(numOfPlayer)
+function goToPlayer(param)
+	currentPosition = ( (param.round - 1) % param.numOfPlayer ) + 1
+	updatePos(param.numOfPlayer)
 end
 
 
@@ -60,7 +62,7 @@ end
 --[[ Data Persistence ]]
 function bundleVars()
 	local vars = {
-		['playerPositions'] = playerPositions,
+		playerPositions = playerPositions
 	}
 
 	return vars
@@ -75,9 +77,9 @@ function onLoad(stateString)
 		print('Start Marker '..self.guid..' not setup.')
 	else
   		local state = JSON.decode(stateString)
-  		playerPositions = state['playerPositions']
+  		playerPositions = state.playerPositions
 
-		Global.registerStartMarker(self)
+		Global.call('registerStartMarker', self)
 	end
 end
 

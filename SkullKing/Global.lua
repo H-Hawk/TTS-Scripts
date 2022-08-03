@@ -29,18 +29,18 @@ function registerStartMarker(objRef)
 	startMarker = objRef
 end
 
-function registerPointCounter(objRef, color)
-	pointCounter[color] = objRef
+function registerPointCounter(param)
+	pointCounter[param.color] = param.objRef
 end
 
-function registerBid(objRef, color)
-	if color == 'Grey' then return end
+function registerBid(param)
+	if param.color == 'Grey' then return end
 
-	if not bids[color] then 
-		bids[color] = {}
+	if not bids[param.color] then 
+		bids[param.color] = {}
 	end
 
-	table.insert(bids[color], objRef)
+	table.insert(bids[param.color], param.objRef)
 end
 
 
@@ -105,7 +105,7 @@ function setUp()
 
 	-- Resetin the Round and Startmarker
 	round = 1
-	startMarker.goToPlayer(round, numOfPlayer)
+	startMarker.call('goToPlayer', {round=round, numOfPlayer=numOfPlayer})
 
 	local deck = resetDeck()
 	deck.shuffle()
@@ -118,7 +118,7 @@ function getPlayedBids()
 	output = {}
 	for _, p in pairs(activePlayer) do
 		for _, b in pairs(bids[p]) do
-			if b.isPlayed() then 
+			if b.is_face_down then 
 				table.insert(output, b)
 				break
 			end
@@ -146,7 +146,7 @@ function flipBids()
 	local bids = getPlayedBids()
 	local lenBids = len(bids)
 	if not numOfPlayer == lenBids then
-		print('Error: Mismatch between Number of found Bids'+lenBids+' and Seated Players('+numOfPlayer+')')
+		print('Error: Mismatch between Number of found Bids'..lenBids..' and Seated Players('..numOfPlayer..')')
 		return
 	end
 
@@ -184,7 +184,7 @@ function nextRound()
 
 	returnPlayedBids()
 
-	startMarker.goToNextPlayer()
+	startMarker.call('goToNextPlayer', {round=round, numOfPlayer=numOfPlayer})
 
 	local deck = resetDeck()
 	deck.shuffle()

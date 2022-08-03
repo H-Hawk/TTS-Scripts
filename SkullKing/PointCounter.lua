@@ -41,7 +41,7 @@ function onLoad(stateString)
 
   	owner = state['owner']
 
-	Global.registerPointCounter(self, owner)
+	Global.call('registerPointCounter', {color=owner, objRef=self})
 end
 
 

@@ -33,35 +33,35 @@ end
 
 subMenu = {}
 subMenu['main'] = {}
-subMenu['main'][1] = function(player) callFuncForAllSelected(player, 'upgrade', {}) end
+--subMenu['main'][1] = function(player) callFuncForAllSelected(player, 'upgrade') end
 subMenu['main'][4] = function(player) currentMenu = 'setup' print('Entered Setup Mode')end
-subMenu['main'][10] = function(player) callFuncForHovered(player, 'dumpVars', {}) end
+subMenu['main'][10] = function(player) callFuncForHovered(player, 'dumpVars') end
 
 --[[ General Setup Menu ]]
 subMenu['setup'] = {}
 subMenu['setup'][1] = function(player) currentMenu = 'owner' end
 subMenu['setup'][2] = function(player) currentMenu = 'value' end
-subMenu['setup'][3] = function(player) callFuncForAllSelected(player, 'setValue', {10}) end
-subMenu['setup'][4] = function(player) callFuncForAllSelected(player, 'setHome', {}) end
-subMenu['setup'][5] = function(player) callFuncForHovered(player, 'addPlayerPosition', {}) end
-subMenu['setup'][6] = function(player) callFuncForHovered(player, 'resetPlayerPositions', {}) end
+subMenu['setup'][3] = function(player) callFuncForAllSelected(player, 'setValue', 10) end
+subMenu['setup'][4] = function(player) callFuncForAllSelected(player, 'setHome') end
+subMenu['setup'][5] = function(player) callFuncForHovered(player, 'addPlayerPosition') end
+subMenu['setup'][6] = function(player) callFuncForHovered(player, 'resetPlayerPositions') end
 subMenu['setup'][7] = function(player) initObj(player, urlBid) end
 subMenu['setup'][8] = function(player) initObj(player, urlPoint) end
 subMenu['setup'][9] = function(player) currentMenu = 'main' end
 
 --[[ Setting Owner ]]
 subMenu['owner'] = {}
-subMenu['owner'][1] = function(player) callFuncForAllSelected(player, 'setOwner', {'White'}) currentMenu = 'setup' end
-subMenu['owner'][2] = function(player) callFuncForAllSelected(player, 'setOwner', {'Brown'}) currentMenu = 'setup' end
-subMenu['owner'][3] = function(player) callFuncForAllSelected(player, 'setOwner', {'Red'}) currentMenu = 'setup' end
-subMenu['owner'][4] = function(player) callFuncForAllSelected(player, 'setOwner', {'Green'}) currentMenu = 'setup' end
-subMenu['owner'][5] = function(player) callFuncForAllSelected(player, 'setOwner', {'Teal'}) currentMenu = 'setup' end
-subMenu['owner'][6] = function(player) callFuncForAllSelected(player, 'setOwner', {'Blue'}) currentMenu = 'setup' end
+subMenu['owner'][1] = function(player) callFuncForAllSelected(player, 'setOwner', 'White') currentMenu = 'setup' end
+subMenu['owner'][2] = function(player) callFuncForAllSelected(player, 'setOwner', 'Brown') currentMenu = 'setup' end
+subMenu['owner'][3] = function(player) callFuncForAllSelected(player, 'setOwner', 'Red') currentMenu = 'setup' end
+subMenu['owner'][4] = function(player) callFuncForAllSelected(player, 'setOwner', 'Green') currentMenu = 'setup' end
+subMenu['owner'][5] = function(player) callFuncForAllSelected(player, 'setOwner', 'Teal') currentMenu = 'setup' end
+subMenu['owner'][6] = function(player) callFuncForAllSelected(player, 'setOwner', 'Blue') currentMenu = 'setup' end
 
 --[[ Setting Values ]]
 subMenu['value'] = {}
 for i = 1, 10, 1 do
-	subMenu['value'][i] = function(player) callFuncForAllSelected(player, 'setValue', {i}) currentMenu = 'setup' end
+	subMenu['value'][i] = function(player) callFuncForAllSelected(player, 'setValue', i) currentMenu = 'setup' end
 end
 
 
@@ -69,8 +69,7 @@ end
 currentMenu = 'main'
 
 function onScriptingButtonDown(index, player)
-	print('Catching Button')
-	if not Player[player].host then return end
-	print('Player is Host')
+	if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
+	print('Current Menu: '..currentMenu)
 	subMenu[currentMenu][index](player)
 end

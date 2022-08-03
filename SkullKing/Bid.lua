@@ -14,22 +14,16 @@ function setValue(number)
 end
 
 function setHome()
-	home['position'] = self.getPosition()
-	home['rotation'] = self.getRotation()
+	home.position = self.getPosition()
+	home.rotation = self.getRotation()
 end
 
 
 --[[ Used in Play ]]
 function returnHome()
-	self.setPosition(home['position'])
-	self.setRotation(home['rotation'])
+	self.setPosition(home.position)
+	self.setRotation(home.rotation)
 end 
-
--- WIP
-function isPlayed()
-	print(self.getRotation())
-	return true
-end
 
 
 --[[ Debugging ]]
@@ -41,9 +35,9 @@ end
 --[[ Data Persistence ]]
 function bundleVars()
 	local vars = {
-		['owner'] = owner,
-		['value'] = value,
-		['home'] = home
+		owner = owner,
+		value = value,
+		home = home
 	}
 
 	return vars
@@ -60,11 +54,11 @@ function onLoad(stateString)
 
 	local state = JSON.decode(stateString)
 
-	owner = state['owner']
-	value = state['value'] 
-	home =  state['home']
+	owner = state.owner
+	value = state.value 
+	home =  state.home
 
-	Global.registerBid(self, owner)
+	Global.call('registerBid', {color=owner, objRef=self})
 end
 
 
