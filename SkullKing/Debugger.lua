@@ -72,4 +72,5 @@ function onScriptingButtonDown(index, player)
 	if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
 	print('Current Menu: '..currentMenu)
 	subMenu[currentMenu][index](player)
+	print('Current Menu: '..currentMenu)
 end

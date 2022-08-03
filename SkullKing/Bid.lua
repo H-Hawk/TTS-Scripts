@@ -51,14 +51,14 @@ function onLoad(stateString)
 	if stateString:len() == 0 then 
 		print('Bidtoken '..self.guid..' not setup.')
 	else
-
-	local state = JSON.decode(stateString)
-
-	owner = state.owner
-	value = state.value 
-	home =  state.home
-
-	Global.call('registerBid', {color=owner, objRef=self})
+		local state = JSON.decode(stateString)
+	
+		owner = state.owner
+		value = state.value 
+		home =  state.home
+	
+		Global.call('registerBid', {color=owner, objRef=self})
+	end
 end
 
 
