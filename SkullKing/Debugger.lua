@@ -35,6 +35,7 @@ subMenu = {}
 subMenu['main'] = {}
 --subMenu['main'][1] = function(player) callFuncForAllSelected(player, 'upgrade') end
 subMenu['main'][4] = function(player) currentMenu = 'setup' print('Entered Setup Mode')end
+subMenu['main'][8] = function(player) upgrade() end
 subMenu['main'][10] = function(player) callFuncForHovered(player, 'dumpVars') end
 
 --[[ General Setup Menu ]]
@@ -77,4 +78,21 @@ function onScriptingButtonDown(index, player)
 	print('Previous Menu: '..currentMenu)
 	subMenu[currentMenu][index](player)
 	print('Current Menu: '..currentMenu)
+end
+
+--[[ Upgrade ]]
+url = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Debugger.lua'
+
+function upgradeCallback(req)
+	if req.is_error then
+        log(req.error)
+    else
+        local state = self.script_state
+        self.script_code = req.text
+        onLoad(state)
+    end
+end
+
+function upgrade()
+    WebRequest.get(url, upgradeCallback)
 end
