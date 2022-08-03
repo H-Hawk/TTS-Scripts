@@ -5,6 +5,7 @@ function len(t)
     return out
 end
 
+
 --[[ Const ]]
 playSurface = '9a3403'
 deckPos = {-45.00, 2.02, -3.00}
@@ -59,10 +60,10 @@ end
 
 --[[ SetUp ]]
 function shuffle(toShuffel)
-    local len, random = #toShuffel, math.random ;
+    local len, random = #toShuffel, math.random
     for i = len, 2, -1 do
-        local j = random( 1, i );
-        toShuffel[i], toShuffel[j] = tbl[j], toShuffel[i];
+        local j = random( 1, i )
+        toShuffel[i], toShuffel[j] = toShuffel[j], toShuffel[i]
     end
     return toShuffel;
 end
@@ -92,9 +93,9 @@ function setUp()
     seatPlayersRandomly()
 
     -- Reseting all Bid Token
-    for _, p in pairs(bids) do
-        for _, b in pairs(bids[p]) do
-            b.returnHome()
+    for _, pb in pairs(bids) do
+        for _, b in pairs(pb) do
+            b.call('returnHome')
         end
     end
 
@@ -103,13 +104,9 @@ function setUp()
         c.reset()
     end
 
-    -- Resetin the Round and Startmarker
-    round = 1
-    startMarker.call('goToPlayer', {round=round, numOfPlayer=numOfPlayer})
-
-    local deck = resetDeck()
-    deck.shuffle()
-    deck.deal(round)
+    -- Reseting the Round and Startmarker
+    round = 0
+    resetDeck(dealNextRound)
 end
 
 
@@ -160,35 +157,60 @@ end
 --[[ Next Round ]]
 function returnPlayedBids()
     for _, v in pairs(playedBids) do
-        v.returnHome()
+        v.call('returnHome')
     end
 end
 
-function resetDeck()
-    local deck = group(getObjectsWithTag('Card'))
-    local lenDeck = len(deck)
-    if not lenDeck == 1 then 
-        print('Error: Unable to reset Deck. Trying Again.')
-        return resetDeck()
-    else 
-        deck = deck[1]
-        deck.setPosition(deckPos)
-        deck.setRotation(deckRot)
+function resetDeck(continue)
+    local cards = getObjectsWithTag('Card')
+    local deck = group(cards)
 
-        return deck
+    local allResting = true
+    for _, v in pairs(cards) do
+        allResting = allResting and v.resting
     end
+
+    if not allResting then
+        local callBack = function()
+            resetDeck(continue)
+        end
+
+        Wait.time(callBack, 0.5)
+        print('Couldnt retrieve all Cards. Please wait a secound.')
+        return 
+    end
+
+    deck = deck[1]
+
+    deck.setPosition(deckPos)
+    deck.setRotation(deckRot)
+
+    continue(deck)
+end
+
+function dealNextRound(deck)
+    round = round + 1
+
+    startMarker.call('goToPlayer', {round=round, numOfPlayer=numOfPlayer})
+
+    deck.shuffle()
+    deck.deal(round)
 end
 
 function nextRound()
-    round = round + 1
-
     returnPlayedBids()
 
-    startMarker.call('goToNextPlayer', {round=round, numOfPlayer=numOfPlayer})
+    local continue = function(deck) print('DeadBeef') end
 
-    local deck = resetDeck()
-    deck.shuffle()
-    deck.deal(round)
+    if round < 10 then 
+        continue = dealNextRound
+    else
+        continue = function(deck)
+            print('The Game only has 10 Rounds')
+        end
+    end
+
+    resetDeck(continue)
 end
 
 
