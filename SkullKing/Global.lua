@@ -235,6 +235,22 @@ function onLoad()
 end
 
 
+--[[ Debugging ]]
+function dumpVars()
+    print('ping')
+    bidsGuid = {}
+
+    for c, pb in pairs(bids) do
+        bidsGuid[c] = {}
+        for _, b in pairs(pb) do
+            table.insert(bidsGuid[c], b.guid) 
+        end
+    end
+
+    print(JSON.encode_pretty(bidsGuid))
+end
+
+
 --[[ Upgrade ]]
 url = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Global.lua'
 

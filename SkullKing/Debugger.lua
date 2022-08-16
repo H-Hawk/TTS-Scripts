@@ -50,6 +50,8 @@ subMenu = {}
 subMenu['main'] = {}
 --subMenu['main'][1] = function(player) callFuncForAllSelected(player, 'upgrade') end
 subMenu['main'][4] = function(player) currentMenu = 'setup' print('Entered Setup Mode') end
+subMenu['main'][5] = function(player) print('dd') Global.call('dumpVars') end
+subMenu['main'][6] = function(player) print(JSON.encode_pretty(Player[player].getHoverObject().getPosition())) end
 subMenu['main'][8] = function(player) currentMenu = 'upgrade' print('Entered Upgrade Mode') end
 subMenu['main'][10] = function(player) callFuncForHovered(player, 'dumpVars') end
 
