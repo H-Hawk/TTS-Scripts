@@ -40,7 +40,7 @@ end
 
 function upgradeAll()
     for _, obj in pairs(getObjects()) do 
-        if script_code:len() > 10 then
+        if obj.script_code:len() > 10 then
             obj.call('upgrade')
         end
     end
