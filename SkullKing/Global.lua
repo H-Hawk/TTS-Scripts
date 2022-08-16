@@ -103,7 +103,7 @@ function setUp()
 
     -- Reseting all Point Counter
     for _, c in pairs(pointCounter) do
-        c.reset()
+        c.call('reset')
     end
 
     -- Reseting the Round and Startmarker
