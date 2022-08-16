@@ -58,7 +58,7 @@ function isPlayed()
            + math.abs(home.position.y - cPos.y) 
            + math.abs(home.position.z - cPos.z) )
 
-    if dist > 2 then 
+    if dist > deadzone then 
         return true
     end
 
