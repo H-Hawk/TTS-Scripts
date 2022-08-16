@@ -117,7 +117,7 @@ function getPlayedBids()
     output = {}
     for _, p in pairs(activePlayer) do
         for _, b in pairs(bids[p]) do
-            if b.is_face_down then 
+            if b.call('isPlayed') then 
                 table.insert(output, b)
                 break
             end
