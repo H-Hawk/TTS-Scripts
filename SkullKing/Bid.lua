@@ -45,6 +45,24 @@ function returnHome()
     self.setRotation(home.rotation)
 end 
 
+function isPlayed()
+    if not self.is_face_down then 
+        return false
+    end
+
+    cPos = self.getPosition()
+
+    dist = ( math.abs(home.position.x - cPos.x) 
+           + math.abs(home.position.y - cPos.y) 
+           + math.abs(home.position.z - cPos.z) )
+
+    if dist > 2 then 
+        return true
+    end
+
+    return false
+end
+
 
 --[[ Debugging ]]
 function dumpVars()
