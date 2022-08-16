@@ -137,15 +137,17 @@ function rejectBids()
 end
 
 function flipBids()
+    local bids = getPlayedBids()
+    local lenBids = len(bids)
+    
     if not checkBids() then 
         rejectBids()
         return 
     end
 
-    local bids = getPlayedBids()
-    local lenBids = len(bids)
-    if not numOfPlayer == lenBids then
-        print('Error: Mismatch between Number of found Bids'..lenBids..' and Seated Players('..numOfPlayer..')')
+
+    if not (numOfPlayer == lenBids) then
+        print('Error: Mismatch between Number of found Bids('..lenBids..') and Seated Players('..numOfPlayer..')')
         return
     end
 
