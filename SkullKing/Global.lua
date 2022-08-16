@@ -261,21 +261,3 @@ function dumpVars()
 
     print(JSON.encode_pretty(bidsGuid))
 end
-
-
---[[ Upgrade ]]
-url = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Global.lua'
-
-function upgradeCallback(req)
-    if req.is_error then
-        log(req.error)
-    else
-        local state = self.script_state
-        self.script_code = req.text
-        onLoad(state)
-    end
-end
-
-function upgrade()
-    WebRequest.get(url, upgradeCallback)
-end

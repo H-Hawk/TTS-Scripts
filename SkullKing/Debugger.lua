@@ -44,7 +44,7 @@ function upgradeAll()
             obj.call('upgrade')
         end
     end
-    Global.call('upgrade')
+    broadcastToAll('Remember to upgrade the Global script manually, as its not automatically upgraded', {r=1, g=0, b=0})
 end
 
 subMenu = {}
