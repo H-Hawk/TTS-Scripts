@@ -189,7 +189,7 @@ function resetDeck(continue)
             resetDeck(continue)
         end
 
-        Wait.time(callBack, 0.5)
+        Wait.time(callBack, 2)
 
         local msg = 'Couldnt retrieve all Cards. Please wait a secound.'
         broadcastToAll(msg, {r=1, g=1, b=1})
