@@ -21,6 +21,8 @@ end
 owner = 'Grey'
 value = -1
 
+deadzone = 2
+
 home = {}
 
 
@@ -86,6 +88,7 @@ function onSave()
 end
 
 function onLoad(stateString)
+    deadzone = Global.call('getBidDeadzone')
     if stateString:len() == 0 then 
         print('Bidtoken '..self.guid..' not setup.')
     else

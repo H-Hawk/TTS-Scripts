@@ -59,6 +59,9 @@ function getRound()
     return round
 end
 
+function getBidDeadzone()
+    return 15
+end
 
 --[[ SetUp ]]
 function shuffle(toShuffel)
