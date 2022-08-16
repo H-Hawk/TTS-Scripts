@@ -1,6 +1,14 @@
 urlBid = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/Bid.lua'
 urlPoint = 'https://raw.githubusercontent.com/H-Hawk/TTS-Scripts/main/SkullKing/PointCounter.lua'
 
+--[[ Helper ]]
+function len(t)
+    local out = 0
+    for _, _ in pairs(t) do out = out + 1 end
+    return out
+end
+
+
 objToInit = {}
 
 function writeObjs(req)
@@ -30,13 +38,27 @@ function callFuncForHovered(player, func, param)
     obj.call(func, param)
 end
 
+function upgradeAll()
+    for _, obj in pairs(getObjects()) do 
+        if script_code:len() > 10 then
+            obj.call('upgrade')
+        end
+    end
+end
 
 subMenu = {}
 subMenu['main'] = {}
 --subMenu['main'][1] = function(player) callFuncForAllSelected(player, 'upgrade') end
-subMenu['main'][4] = function(player) currentMenu = 'setup' print('Entered Setup Mode')end
-subMenu['main'][8] = function(player) upgrade() end
+subMenu['main'][4] = function(player) currentMenu = 'setup' print('Entered Setup Mode') end
+subMenu['main'][8] = function(player) currentMenu = 'upgrade' print('Entered Upgrade Mode') end
 subMenu['main'][10] = function(player) callFuncForHovered(player, 'dumpVars') end
+
+--[[ Upgrade Menu]]
+subMenu['upgrade'] = {}
+for i = 1, 10, 1 do
+    subMenu['upgrade'][i] = function(player) currentMenu = 'main' print('Leaving Upgrade Mode') end
+end
+subMenu['upgrade'][3] = function(player) upgradeAll() currentMenu = 'main' print('Leaving Upgrade Mode') end
 
 --[[ General Setup Menu ]]
 subMenu['setup'] = {}
