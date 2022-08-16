@@ -85,9 +85,8 @@ function goToPlayer(round)
 end
 
 function reveal()
-    updatePos()
-    
     if trollInProgress then 
+        updatePos()
         print('Gerollt, du musst raus')
         trollInProgress = false
     end
