@@ -151,7 +151,9 @@ function flipBids()
 
 
     if not (numOfPlayer == lenBids) then
-        print('Error: Mismatch between Number of found Bids('..lenBids..') and Seated Players('..numOfPlayer..')')
+        local msg = 'Error: Mismatch between Number of found Bids('..lenBids..') and Seated Players('..numOfPlayer..')'
+        broadcastToAll(msg, {r=1, g=0, b=0})
+        
         return
     end
 
@@ -184,7 +186,10 @@ function resetDeck(continue)
         end
 
         Wait.time(callBack, 0.5)
-        print('Couldnt retrieve all Cards. Please wait a secound.')
+
+        local msg = 'Couldnt retrieve all Cards. Please wait a secound.'
+        broadcastToAll(msg, {r=1, g=1, b=1})
+        
         return 
     end
 
