@@ -99,6 +99,7 @@ end
 currentMenu = 'main'
 
 function onScriptingButtonDown(index, player)
+    if self.hasTag('disable') then print('Debugger disabled') return end
     if not Player[player].host then print(Player[player].steam_name..' hat sich mit einem Hammer auf die Finger gehauen!') return end
     print('Previous Menu: '..currentMenu)
     subMenu[currentMenu][index](player)
