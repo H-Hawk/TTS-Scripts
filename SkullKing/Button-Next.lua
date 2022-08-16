@@ -7,7 +7,7 @@ function onLoad(save_state)
 end
 
 function onScriptingButtonDown(index, color)
-    if self.hasTag('enable') and index = 3 then
+    if self.hasTag('enable') and index == 3 then
         Global.call('nextRound')
     end
 end

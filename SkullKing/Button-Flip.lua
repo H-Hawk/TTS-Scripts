@@ -7,7 +7,7 @@ function onLoad(save_state)
 end
 
 function onScriptingButtonDown(index, color)
-    if self.hasTag('enable') and index = 1 then
+    if self.hasTag('enable') and index == 1 then
         Global.call('flipBids')
     end
 end

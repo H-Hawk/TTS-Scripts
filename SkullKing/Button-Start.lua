@@ -7,7 +7,7 @@ function onLoad(save_state)
 end
 
 function onScriptingButtonDown(index, color)
-    if self.hasTag('enable') and index = 8 then
+    if self.hasTag('enable') and index == 8 then
         Global.call('setUp')
     end
 end
