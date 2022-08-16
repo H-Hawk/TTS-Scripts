@@ -98,6 +98,8 @@ function setUp()
     activePlayer = {}
     seatPlayersRandomly()
 
+    startMarker.call('setNumOfPlayer', numOfPlayer)
+
     -- Reseting all Bid Token
     for _, pb in pairs(bids) do
         for _, b in pairs(pb) do
@@ -161,6 +163,8 @@ function flipBids()
     for _, v in pairs(bids) do
         v.flip()
     end
+
+    startMarker.call('reveal')
 end
 
 
@@ -204,7 +208,7 @@ end
 function dealNextRound(deck)
     round = round + 1
 
-    startMarker.call('goToPlayer', {round=round, numOfPlayer=numOfPlayer})
+    startMarker.call('goToPlayer', round)
 
     deck.shuffle()
     deck.deal(round)

@@ -40,6 +40,8 @@ playerPositions = {}
 
 --[[ Vars ]]
 currentPosition = 1
+numOfPlayer = 1
+trollInProgress = false
 
 --[[ Setup Setter]]
 function addPlayerPosition()
@@ -63,13 +65,32 @@ end
 
 
 --[[ Used in Play ]]
-function updatePos(numOfPlayer)
+function setNumOfPlayer(toSet)
+    math.randomseed(math.floor((Time.time-math.floor(Time.time))*math.pow(10,10)))
+    numOfPlayer = toSet
+end
+
+function updatePos()
     self.setPosition(playerPositions[order[numOfPlayer][currentPosition]])
 end
 
-function goToPlayer(param)
-    currentPosition = ( (param.round - 1) % param.numOfPlayer ) + 1
-    updatePos(param.numOfPlayer)
+function goToPlayer(round)
+    currentPosition = ( (round - 1) % numOfPlayer ) + 1
+
+    if self.hasTag('troll') and math.random(50) == 42 then
+        trollInProgress = true
+    else
+        updatePos()
+    end
+end
+
+function reveal()
+    updatePos()
+    
+    if trollInProgress then 
+        print('Gerollt, du musst raus')
+        trollInProgress = false
+    end
 end
 
 
