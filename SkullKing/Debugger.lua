@@ -44,6 +44,7 @@ function upgradeAll()
             obj.call('upgrade')
         end
     end
+    Global.call('upgrade')
 end
 
 subMenu = {}
