@@ -31,6 +31,8 @@ function registerStartMarker(objRef)
 end
 
 function registerPointCounter(param)
+    if param.color == 'Grey' then return end
+    
     pointCounter[param.color] = param.objRef
 end
 
