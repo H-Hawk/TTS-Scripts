@@ -92,6 +92,7 @@ function seatPlayersRandomly()
 end
 
 function setUp()
+    activePlayer = {}
     seatPlayersRandomly()
 
     -- Reseting all Bid Token
