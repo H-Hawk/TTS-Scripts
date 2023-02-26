@@ -8,7 +8,7 @@ end
 function round(toRound, decParam)
     local dec = decParam or 0
 
-    local shiftingPow = math.pow(10, dec)
+    local shiftingPow = 10 ^ dec
 
     return math.floor( (toRound*shiftingPow) + 0.5 ) / shiftingPow
 end
@@ -66,7 +66,7 @@ end
 
 --[[ Used in Play ]]
 function setNumOfPlayer(toSet)
-    math.randomseed(math.floor((Time.time-math.floor(Time.time))*math.pow(10,10)))
+    math.randomseed(math.floor((Time.time-math.floor(Time.time))*(10 ^ 10)))
     numOfPlayer = toSet
 end
 

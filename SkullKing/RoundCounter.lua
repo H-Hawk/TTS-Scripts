@@ -1,5 +1,5 @@
 --[[ Perma Refresh ]]
-function onLoad()
+function onLoad(_)
     Wait.time(refresh, 1, -1)
 end
 
