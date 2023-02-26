@@ -6,7 +6,11 @@ function new_event(event_name)
 	end
 end
 
-function register_to_event(event_name, guid, callback)
+function register_to_event(input)
+	local event_name = input["event_name"]
+	local guid = input["guid"]
+	local callback = input["callback"]
+
 	if events[event_name] ~= nil then
 		table.insert(events[event_name], {
 			["guid"] = guid,
@@ -21,13 +25,3 @@ function trigger_event(event_name)
 	end
 end
 
-
-global_store = {}
-
-function get_global_value(key)
-	return global_store[key]
-end
-
-function set_global_value(key, value)
-	global_store[key] = value
-end
