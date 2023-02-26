@@ -1,0 +1,24 @@
+{
+    "Lua.diagnostics.globals": [
+        "self",
+
+        "broadcastToAll",
+        "getObjects",
+        "getObjectFromGUID",
+        "getObjectsWithTag",
+        "group",
+        "log",
+
+        "Global",
+        "Grid",
+        "JSON",
+        "Player",
+        "Time",
+        "Vector",
+        "Wait",
+        "WebRequest"
+    ],
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
+    ]
+}

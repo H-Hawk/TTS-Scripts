@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "Tabletop Simulator Lua",
+			"path": "../../../NERGIG~1/AppData/Local/Temp/TabletopSimulator/Tabletop Simulator Lua"
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"rolandostar.tabletopsimulator-lua"
+		]
+	}
+}
