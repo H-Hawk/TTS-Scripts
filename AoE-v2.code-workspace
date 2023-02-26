@@ -2,7 +2,11 @@
 	"folders": [
 		{
 			"name": "Scripts",
-			"path": "."
+			"path": "./AoE-v2"
+		},
+		{
+			"name": "Utils",
+			"path": "./utils"
 		},
 		{
 			"name": "Tabletop Simulator Lua",

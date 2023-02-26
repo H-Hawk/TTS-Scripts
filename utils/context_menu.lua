@@ -1,3 +1,13 @@
+function check_context(to_check)
+    if to_check == nil then
+        return {
+            ["prefix"] = ""
+        }
+    else
+        return to_check
+    end
+end
+
 -- Context Menu Helpers
 function add_context_toggle(label, var_name)
     local toggle = function()
@@ -42,7 +52,7 @@ end
 owner = ""
 owner_first_click = false
 function add_context_ower()
-    if owner == nil then
+    if owner == "" then
         local callback = function(player)
             owner = player
             rebuild_context_menu()
@@ -67,46 +77,28 @@ function add_context_ower()
 end
 
 context_folder_states = {}
-function add_context_folder(folder_name)
+function add_context_folder(folder_name, folder_setup, context_in)
+    local context = check_context(context_in)
+
+
     if not context_folder_states[folder_name] then
         context_folder_states[folder_name] = false
     end
-end
 
+    if context_folder_states[folder_name] then
+        folder_setup()
+    end
+
+end
 
 function rebuild_context_menu()
     self.clearContextMenu()
     setup_context_menu()
 end
 
-function setup_context_menu()
-end
-
-function onLoad()
+setup_context_menu = function () end
+function init_context_menu(setup_method)
+    setup_context_menu = setup_method
     rebuild_context_menu()
 end
 
---[[
-function setup_context_menu()
-    add_context_toggle("Color Toggle", "toggle")
-    add_context_dividing_line()
-    add_context_selection("Display Number", {1, 5, 7}, "display")
-    add_context_dividing_line()
-    add_context_ower()
-end
-
--- For the Example
-toggle = false
-display = 6
-function onUpdate()
-    self.setValue(display)
-    if toggle then 
-        self.setColorTint("Green")
-    else
-        self.setColorTint("Red")
-    end
-end
-
-
-
-]]--
