@@ -1,6 +1,7 @@
 --[[ Tags as persistent Storage]]
 
-string.startswith = function(self, str) 
+---@diagnostic disable-next-line: duplicate-set-field
+string.startswith = function(self, str)
     return self:find('^' .. str) ~= nil
 end
 
@@ -326,10 +327,10 @@ end
 
 function getViewVec(target)
   local view = target.getTransformForward()
-  local rotOffset = getTagValue(target, 'rotOff', false)
+  local rotOffset = tonumber(getTagValue(target, 'rotOff', false))
 
   if rotOffset then
-    local rad = math.rad(tonumber(rotOffset))
+    local rad = math.rad(rotOffset)
     local sin = math.sin(rad)
     local cos = math.cos(rad)
 
@@ -438,7 +439,7 @@ function refreshManaged(player)
 end
 
 function refreshAll()
-  for _, v in pairs(getAllObjects()) do
+  for _, v in pairs(getObjects()) do
     if v.hasTag('AoE') then
       refresh(v.guid)
     end
@@ -470,7 +471,7 @@ end
 function onScriptingButtonDown(index, player)
   if not (player:lower() == getTagValue(self, 'owner', 'noColor'):lower()) then return end
   
-  if noSubMenu(self) then
+  if noSubMenu() then
     if index == 1 then 
       addTarget(player)
       drawActive(player)

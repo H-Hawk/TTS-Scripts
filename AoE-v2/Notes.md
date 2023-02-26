@@ -1,0 +1,16 @@
+## Image URLs
+* Dark - White
+	* [Square](http://cloud-3.steamusercontent.com/ugc/1830163607506120570/2EA8124080D10B06D9693F02FF01A94D7D38092A/)
+	* [Circle](http://cloud-3.steamusercontent.com/ugc/1830163607506120365/4A48F834CAB1E16904C0D71787BDFD830F80DA4E/)
+	* [Cone](http://cloud-3.steamusercontent.com/ugc/1830163607506120492/1A859AA44B8B65135D3076EE1284BB1DFE07A016/)
+	* [Line](http://cloud-3.steamusercontent.com/ugc/1830163607509549462/13746729155D0968A6C9F9CDC0E6C35BF84750C9/)
+	* [Centered Square](http://cloud-3.steamusercontent.com/ugc/1830163607509549370/88830E34046E26E1C60B71D44474B324A5C96BE0/)
+* 50 Grey
+	* [Square](http://cloud-3.steamusercontent.com/ugc/1830163607510884252/B415A23C08A78D7ABD2D129275F652C5CF8BAF10/)
+	* [Circle](http://cloud-3.steamusercontent.com/ugc/1830163607510883986/7607CB1B7467813343CEF27D34E4685E1935EF03/)
+	* [Cone](http://cloud-3.steamusercontent.com/ugc/1830163607510884072/DC2C8FA19225A57A3FF85087EF17651EF0FE17DA/)
+	* [Line](http://cloud-3.steamusercontent.com/ugc/1830163607510884164/C8229AB3AC5B6ECC9AD82707DD6319E0AE7DBE8D/) 	
+---
+
+## Rot Offsets
+* Equinox: 285

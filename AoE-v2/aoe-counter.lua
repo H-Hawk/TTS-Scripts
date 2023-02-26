@@ -77,6 +77,7 @@ end
 
 
 --[[ Reading Data From Tags ]]
+---@diagnostic disable-next-line: duplicate-set-field
 string.startswith = function(self, str) 
     return self:find('^' .. str) ~= nil
 end
