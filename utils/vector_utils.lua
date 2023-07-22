@@ -1,12 +1,10 @@
-function round(number, acc)
-    local offset = math.pow(10, acc)
-    return math.floor((number * offset) + 0.5) / offset
-end
+utils = require("utils.general_utils")
 
 Vector.round = function(self, acc)
-    self.x = round(self.x, acc)
-    self.y = round(self.y, acc)
-    self.z = round(self.z, acc)
+    self.x = utils.round(self.x, acc)
+    self.y = utils.round(self.y, acc)
+    self.z = utils.round(self.z, acc)
 
     return self
 end
+
