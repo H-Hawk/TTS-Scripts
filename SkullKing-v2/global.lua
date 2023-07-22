@@ -1,4 +1,5 @@
 local tag_func = require("utils.tag_function")
+local util = require("utils.general_utils")
 
 local skull_king = {
     resting_places = {
@@ -88,42 +89,147 @@ local skull_king = {
         }
     },
     starting_marker = "c2ea6f",
+    troll_factor = 0.05,
     deck_pos = {-45.00, 2.02, -3.00},
     deck_rot = {0, 180, 180},
-    seating_order = {
-        "Brown",
-        "Red",
-        "Green",
-        "Teal",
-        "White",
-        "Blue"
+    seating_order = { "Brown", "Red", "Green", "Teal", "White", "Blue" },
+    starting_player_order = {
+        {"Brown"},
+        {"Brown", "Red"},
+        {"Brown", "Red", "Green"},
+        {"Brown", "Red", "Green", "Teal"},
+        {"White", "Brown", "Red", "Green", "Teal"},
+        {"White", "Brown", "Red", "Green", "Teal", "Blue"}
     }
 }
 
-
-
-
 local state = {
     number_of_players = 0,
+    active_players = {},
     round = 0,
     phase = 0,
     number_of_placed_bets = 0,
-    placed_bets = {}
+    placed_bets = {
+        ["Blue"] = nil,
+        ["Brown"] = nil,
+        ["Green"] = nil,
+        ["Red"] = nil,
+        ["Teal"] = nil,
+        ["White"] = nil
+    },
+    starting_player_troll = false
 }
 
-
-function flip_played_bids()
-    if state.phase == 2 then
-        for _, bid_guid in pairs(state.placed_bets) do
-            getObjectFromGUID(bid_guid).flip()
-        end
+function return_bid_home()
+    for _, bid in pairs(getObjectsWithTag("Bid")) do
+        bid.setPosition(skull_king.resting_places[bid.getGUID()])
     end
 end
+
+function reset_script_state()
+    state = {
+        number_of_players = 0,
+        active_players = {},
+        round = 0,
+        phase = 0,
+        number_of_placed_bets = 0,
+        placed_bets = {
+            ["Blue"] = nil,
+            ["Brown"] = nil,
+            ["Green"] = nil,
+            ["Red"] = nil,
+            ["Teal"] = nil,
+            ["White"] = nil
+        },
+        starting_player_troll = false
+    }
+end
+
+function clean_up()
+    reset_script_state()
+
+    return_bid_home()
+
+    getObjectFromGUID(skull_king.starting_marker).setPosition(skull_king.action_places.starting_marker.White)
+
+    local end_clean_up = function ()
+        broadcastToAll("Clean up finished", {r=1, g=1, b=1})
+    end
+
+    reset_deck(end_clean_up)
+end
+
+function seat_players_randomly()
+    local players = Player.getPlayers()
+
+    local len = util.len(players)
+
+    if len > 6 then 
+        print('Error: Too many Player')
+        return
+    end
+
+    state.number_of_players = len
+
+    players = util.shuffle(players)
+
+    for i, v in ipairs(players) do 
+        Player[skull_king.seating_order[i]].changeColor('Grey')
+        v.changeColor(skull_king.seating_order[i])
+        table.insert(state.active_players, skull_king.seating_order[i])
+    end
+end
+
+function set_up()
+    reset_script_state()
+    state.active_players = {}
+    seat_players_randomly()
+
+    return_bid_home()
+
+    -- Reseting all Point Counter
+    --for _, c in pairs(pointCounter) do
+    --    c.call('reset')
+    --end
+
+    -- Reseting the Round and Startmarker
+    state.round = 0
+    reset_deck(deal_next_round)
+end
+
+
 
 function continue_to_play_phase() 
     if state.number_of_placed_bets == state.number_of_players then
         state.phase = 2
-        flip_played_bids()
+        for _, bid_guid in pairs(state.placed_bets) do
+            getObjectFromGUID(bid_guid).flip()
+        end
+        if state.starting_player_troll then
+            resolve_troll()
+        end
+    end
+end
+
+function update_starting_player_marker()
+    local c_player_index =  ( (state.round - 1)  % state.number_of_players ) + 1
+    local c_player = skull_king.starting_player_order[state.number_of_players][c_player_index]
+
+    getObjectFromGUID(skull_king.starting_marker).setPosition(skull_king.action_places.starting_marker[c_player])
+end
+
+function resolve_troll()
+    if state.starting_player_troll then
+        state.starting_player_troll = false
+       update_starting_player_marker()
+    end
+end
+
+function engade_troll()
+    if state.round ~= 1 and math.random() < skull_king.troll_factor then
+        state.starting_player_troll = true
+    else
+        update_starting_player_marker()
     end
 end
 
@@ -132,10 +238,10 @@ function deal_next_round(deck)
     state.round = state.round + 1
     state.phase = 1
 
-    startMarker.call('goToPlayer', round)
+    engade_troll()
 
     deck.shuffle()
-    deck.deal(round)
+    deck.deal(state.round)
 end
 
 function reset_deck(continue)
@@ -181,21 +287,25 @@ function next_round()
         end
     end
 
-    resetDeck(continue)
+    reset_deck(continue)
 end
 
 function onObjectPickUp(player_color, picked_up_object)
-    if picked_up_object.hasTag("bid") then
-        local owner_color = tag_func.get_value(picked_up_object, "player", nil)
-        if owner_color ~= nil and player_color == owner_color and state.placed_bets[owner_color] ~= nil then
+    if picked_up_object.hasTag("Bid") then
+        local owner_color = tag_func.get_value(picked_up_object, "Player", nil)
+        if owner_color ~= nil and player_color == owner_color and state.placed_bets[owner_color] == nil then
             state.placed_bets[owner_color] = picked_up_object.getGUID()
             state.number_of_placed_bets = state.number_of_placed_bets + 1
-            picked_up_object.setPosition(skull_king.action_places[owner_color])
+            picked_up_object.flip()
+            print(skull_king.action_places.playing_bet[owner_color])
+            picked_up_object.setPosition(skull_king.action_places.playing_bet[owner_color])
         end
     end
 end
 
-function onLoad(load_string) 
+function onLoad(load_string)
+    math.randomseed(os.time())
+
     state = JSON.decode(load_string)
 end
 
