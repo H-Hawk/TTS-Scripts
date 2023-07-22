@@ -2,6 +2,9 @@
     "Lua.diagnostics.globals": [
         "self",
 
+        "vec",
+
+        "addHotkey",
         "broadcastToAll",
         "getObjects",
         "getObjectFromGUID",
@@ -12,6 +15,7 @@
         "Global",
         "Grid",
         "JSON",
+        "Math",
         "Player",
         "Time",
         "Vector",
@@ -19,9 +23,7 @@
         "WebRequest"
     ],
     "Lua.diagnostics.disable": [
-        "lowercase-global"
+        "lowercase-global",
+        "deprecated"
     ],
-    "Lua.workspace.ignoreDir": [
-        "./TTS-Scripts/SkullKing",
-    ]
 }
