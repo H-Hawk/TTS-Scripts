@@ -1,4 +1,6 @@
-function check_context(to_check)
+local context_menu_modul = {}
+
+context_menu_modul.check_context = function(to_check)
     if to_check == nil then
         return {
             ["prefix"] = ""
@@ -6,13 +8,13 @@ function check_context(to_check)
     else
         return to_check
     end
-end
+end;
 
 -- Context Menu Helpers
-function add_context_toggle(label, var_name)
+context_menu_modul.add_context_toggle = function(label, var_name)
     local toggle = function()
         self.setVar(var_name, not self.getVar(var_name))
-        rebuild_context_menu()
+        context_menu_modul.rebuild_context_menu()
     end
 
     if self.getVar(var_name) then
@@ -20,19 +22,19 @@ function add_context_toggle(label, var_name)
     else
         self.addContextMenuItem("[  ] "..label, toggle, false)
     end
-end
+end;
 
-function add_context_dividing_line()
+context_menu_modul.add_context_dividing_line = function()
     local noop = function() end
 
     self.addContextMenuItem("-------", noop, true)
-end
+end;
 
-function add_context_selection(label, selection, var_name)
+context_menu_modul.add_context_selection = function(label, selection, var_name)
     local gen_set_func = function(x)
         return function()
             self.setVar(var_name, x)
-            rebuild_context_menu()
+            context_menu_modul.rebuild_context_menu()
         end
     end
 
@@ -47,58 +49,61 @@ function add_context_selection(label, selection, var_name)
         end
     end
 
-end
+end;
 
-owner = ""
-owner_first_click = false
-function add_context_ower()
+context_menu_modul.owner = "";
+context_menu_modul.owner_first_click = false;
+context_menu_modul.add_context_ower = function()
     if owner == "" then
         local callback = function(player)
             owner = player
-            rebuild_context_menu()
+            context_menu_modul.rebuild_context_menu()
         end
         self.addContextMenuItem("Register Owner", callback, false)
     else
         if owner_first_click then
             local callback = function()
                 owner = ""
-                rebuild_context_menu()
+                context_menu_modul.rebuild_context_menu()
             end
             self.addContextMenuItem("Click again to clear", callback, false) 
         else
             local callback = function()
                 owner_first_click = true
-                rebuild_context_menu()
+                context_menu_modul.rebuild_context_menu()
                 owner_first_click = false
             end
             self.addContextMenuItem("Owner: "..owner, callback, false)
         end
     end
-end
+end;
 
-context_folder_states = {}
-function add_context_folder(folder_name, folder_setup, context_in)
-    local context = check_context(context_in)
+context_menu_modul.context_folder_states = {};
+context_menu_modul.add_context_folder = function(folder_name, folder_setup, context_in)
+    local context = context_menu_modul.check_context(context_in)
 
 
-    if not context_folder_states[folder_name] then
-        context_folder_states[folder_name] = false
+    if not context_menu_modul.context_folder_states[folder_name] then
+        context_menu_modul.context_folder_states[folder_name] = false
     end
 
-    if context_folder_states[folder_name] then
+    if context_menu_modul.context_folder_states[folder_name] then
         folder_setup()
     end
 
-end
+end;
 
-function rebuild_context_menu()
+context_menu_modul.rebuild_context_menu = function()
     self.clearContextMenu()
     setup_context_menu()
 end
 
-setup_context_menu = function () end
-function init_context_menu(setup_method)
+context_menu_modul.setup_context_menu = function () end;
+context_menu_modul.init_context_menu = function (setup_method)
     setup_context_menu = setup_method
-    rebuild_context_menu()
-end
+    context_menu_modul.rebuild_context_menu()
+end;
+
+
+return context_menu_modul
 
